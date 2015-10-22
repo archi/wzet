@@ -6,10 +6,11 @@ I removed secrets from our installation (search source for ####), and emptied th
 
 To get a running instance:
 
-1. Set all #### in the source to appropriate values [there are names, description]
-2. Update all references to ''kochen.sqlite'' to your database.
-3. Register a user and set his flag to _1_ [=Admin].
-4. (optional) add phpsqliteadmin to sqladmin.php
+1. Add a \.htaccess to prevent HTTP access to the api/db/ folder!
+2. Set all #### in the source to appropriate values [there are names, description]
+3. Update all references to ''kochen.sqlite'' to your database.
+4. Register a user and set his flag to _1_ [=Admin].
+5. (optional) add phpsqliteadmin to sqladmin.php
 
 General todo:
 
