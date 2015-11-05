@@ -1,5 +1,10 @@
-This software uses the GNU v3 license.
-Images bundled in the folder src/img/ are used under terms of the SIL Open Font License v1.1
+/**
+ * This software is published under the terms of the GNU v3 license,
+ *  as specified in this file.
+ * The images bundled in the folder "img/" are used & bundled under terms
+ *  of the SIL Open Font License v1.1.
+ *  Please take a look at img/license.txt for details
+ */
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
