@@ -1,6 +1,6 @@
 <?php
-include ("api/core.php");
-include ("api/functions.php");
+include ("inc/core.php");
+include ("inc/functions.php");
 
 
 if (!userFlag (1)) {

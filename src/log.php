@@ -1,5 +1,5 @@
 <?php
-include ("api/core.php");
+include ("inc/core.php");
 
 $q = $_DB->query ("SELECT ID,Login FROM Users;");
 $users = array ();
@@ -37,5 +37,5 @@ EOP;
 
 print ("</table>");
 
-include ("api/foot.php");
+include ("inc/foot.php");
 ?>

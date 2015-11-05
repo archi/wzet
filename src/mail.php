@@ -3,19 +3,35 @@ $k = "";
 if (isset ($_GET['m']))
     $k = $_GET['m'];
 
-$key = "#### CRON E-MAIL SECRET KEY HERE ####";
-$tk = "#### E-MAIL PREVIEW KEY HERE ####";
+include "inc/config.php";
 
-if ($k != $key && $k != $tk) {
+/**
+ * Check key
+ */
+if ($k != $_CONFIG["MAIL_CRON_KEY"]
+ && $k != $_CONFIG["MAIL_PREVIEW_KEY"]) {
     die ("Bad key!");
 }
 
-ini_set ('display_errors', 1); 
-ini_set ('display_startup_errors', 1); 
-error_reporting (-1);
+if ($k == "") {
+    die ("Functionality disabled in inc/config.php!");
+}
 
+$preview = false;
+if ($k == $_CONFIG["MAIL_PREVIEW_KEY"]) {
+    $preview = true;
+}
 
-$db = new SQLite3 ("api/db/kochen.sqlite");
+/**
+ * Try to show errors
+ */
+if ($_CONFIG["SHOW_ERRORS"]) {
+    ini_set ('display_errors', 1); 
+    ini_set ('display_startup_errors', 1); 
+    error_reporting (-1);
+}
+
+$db = new SQLite3 ($_CONFIG["DATABASE"]);
 $q = $db->query ("SELECT Name,Konto FROM Users ORDER BY Konto ASC;");
 
 function row () {
@@ -36,12 +52,12 @@ $mail = "Hallo Kochgruppe,\n"
     . "Derzeitiger Stand:\n";
 
 while ($data = $q->fetchArray ()) {
-    $mail .= $data[0] . ": " . $data[1];
+    $mail .= $data[0] . ": " . $data[1] . "\n";
 }
 
 if ($k == $tk) {
     print ("<pre>$mail</pre>");
-    exit ();
+    exit (0);
 }
 
 print ("Not implemented, yet!");

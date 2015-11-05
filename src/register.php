@@ -3,15 +3,21 @@ $k = "";
 if (isset ($_GET['k']))
     $k = $_GET['k'];
 
-$key = "#### REGISTRATION KEY ####";
+include ("inc/config.php");
 
-if ($k != $key) {
+if ($_CONFIG["REGISTER_KEY"] == "-1" || !isset ($_CONFIG["REGISTER_KEY"])) {
+    die ("Registration is disabled in inc/config.php!");
+}
+
+if ($k != $_CONFIG["REGISTER_KEY"]) {
     die ("Bad key!");
 }
 
-ini_set ('display_errors', 1); 
-ini_set ('display_startup_errors', 1); 
-error_reporting (-1);
+if ($_CONFIG["SHOW_ERRORS"]) {
+    ini_set ('display_errors', 1); 
+    ini_set ('display_startup_errors', 1); 
+    error_reporting (-1);
+}
 
 $user = "";
 $name = "";
@@ -50,7 +56,7 @@ if (isset ($_POST['user'])) {
         $ok = false;
     }
     
-    $db = new SQLite3 ("api/db/kochen.sqlite");
+    $db = new SQLite3 ($_CONFIG["DATABASE"]);
     $q = $db->prepare ("SELECT ID FROM Users WHERE Login = :1");
     $q->bindParam (":1", $user);
     $r = $q->execute ();

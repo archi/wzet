@@ -1,6 +1,6 @@
 <?php
-include ("api/core.php");
-include ("api/functions.php");
+include ("inc/core.php");
+include ("inc/functions.php");
 
 /**
  * Check the event title
@@ -120,5 +120,5 @@ addToLog ("Added Event", $event_id);
 $_DB->query ("COMMIT TRANSACTION");
 
 print ("<b>Event eingetragen!</b>");
-include ("api/foot.php");
+include ("inc/foot.php");
 ?>

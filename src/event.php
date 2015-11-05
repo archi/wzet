@@ -3,7 +3,7 @@ ini_set ('display_errors', 1);
 ini_set ('display_startup_errors', 1);
 error_reporting (-1);
 
-include ("api/core.php");
+include ("inc/core.php");
 
 $r = $_DB->query ("SELECT seq FROM SQLITE_SEQUENCE WHERE name='Events'")->fetchArray ();
 $expected_event_id = $r[0] + 1;
@@ -112,4 +112,4 @@ function check () {
     document.getElementById ('js').innerHTML="<input type='submit' onclick='check()'>";
 </script>
 
-<?php include ("api/foot.php"); ?>
+<?php include ("inc/foot.php"); ?>

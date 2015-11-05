@@ -3,17 +3,29 @@
  * Open database
  */
 
-ini_set ('display_errors', 1);
-ini_set ('display_startup_errors', 1);
-error_reporting (-1);
+include ("inc/config.php");
 
-$_DB = new SQLite3 ("api/db/kochen.sqlite");
+/**
+ * Make sure there is a user defined secret for this instance
+ */
+if (!isset ($_CONFIG["SECRET"] || $_CONFIG["SECRET"] == "") {
+    die ("Please configure <b>inc/config.php</b>! You can use <i>inc/config.dist.php</i> as an example.");
+}
+
+/**
+ * Try to enable errors
+ */
+if ($_CONFIG["SHOW_ERRORS"]) {
+    ini_set ('display_errors', 1);
+    ini_set ('display_startup_errors', 1);
+    error_reporting (-1);
+}
+
+$_DB = new SQLite3 ($_CONFIG["DATABASE"]);
 
 if ($_DB->lastErrorCode () != 0) {
     die ("Fatal DB Error!");
 }
-
-$_SECRET = "#### SECRET HERE ####";
 
 $ok = false;
 $msg = "keine";
@@ -56,14 +68,14 @@ if (isset($_POST['user']) and isset ($_POST['pass'])) {
         $msg = "Konnte nicht authentifizieren! <!-- Benutze diesen Hash f&uuml;r einen neuen Account: $hash -->";
     } else {
 
-        $x = hash ("sha512", $_SECRET . $_USER['ID']);
+        $x = hash ("sha512", $_CONFIG["SECRET"] . $_USER['ID']);
         $tout = 60*60*24*30 + time ();
-        setcookie ('kochen_uid', $_USER['ID'], $tout, "/~sebastian/");
-        setcookie ('kochen_sid', $x, $tout, "/~sebastian/");
+        setcookie ('kochen_uid', $_USER['ID'], $tout, $_CONFIG["COOKIE_PATH"]);
+        setcookie ('kochen_sid', $x, $tout, $_CONFIG["COOKIE_PATH"]);
         unset ($x);
     }
 } else if (isset ($_COOKIE['kochen_sid']) && isset ($_COOKIE['kochen_uid'])) {
-    $x = hash ("sha512", $_SECRET . $_COOKIE['kochen_uid']);
+    $x = hash ("sha512", $_CONFIG["SECRET"] . $_COOKIE['kochen_uid']);
 
     if ($x == $_COOKIE['kochen_sid']) {
         $q = $_DB->prepare ("SELECT * FROM users WHERE ID = :1;");
@@ -72,8 +84,8 @@ if (isset($_POST['user']) and isset ($_POST['pass'])) {
         if ($r && $_USER = $r->fetchArray ()) {
             $ok = true; 
         } else {
-            setcookie ("kochen_uid", null, -1, "/~sebastian/");
-            setcookie ("kochen_sid", null, -1, "/~sebastian/");
+            setcookie ("kochen_uid", null, -1, $_CONFIG["COOKIE_PATH"]);
+            setcookie ("kochen_sid", null, -1, $_CONFIG["COOKIE_PATH"]);
             unset ($_COOKIE['kochen_uid']);
             unset ($_COOKIE['kochen_sid']);
             $_USER = false;
@@ -99,14 +111,18 @@ print ("Login Meldung: <b>$msg</b>");
 exit ();
 }
 
+/**
+ * Clean up
+ */
 unset ($_USER["Password"]);
 unset ($_USER[2]);
 unset ($ok);
 unset ($msg);
-unset ($_SECRET);
+unset ($_CONFIG["SECRET"]);
 
 global $_USER;
 global $_DB;
+global $_CONFIG;
 
 ?>
 
