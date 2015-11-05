@@ -15,9 +15,9 @@ EOP;
 
 if (userFlag(1)) {
     print ("<hr>"
-        "Admin:<br>"
-        "<a href='sqladmin.php'>SQLite</a><br>"
-        "<a href='reset.php'>RESET DB</a><br>"
+        . "Admin:<br>"
+        . "<a href='sqladmin.php'>SQLite</a><br>"
+        . "<a href='reset.php'>RESET DB</a><br>"
     );
 
     if ($_CONFIG["MAIL_PREVIEW_KEY"] != "")

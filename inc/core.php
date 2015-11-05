@@ -8,7 +8,7 @@ include ("inc/config.php");
 /**
  * Make sure there is a user defined secret for this instance
  */
-if (!isset ($_CONFIG["SECRET"] || $_CONFIG["SECRET"] == "") {
+if (!isset ($_CONFIG["SECRET"]) || $_CONFIG["SECRET"] == "") {
     die ("Please configure <b>inc/config.php</b>! You can use <i>inc/config.dist.php</i> as an example.");
 }
 
