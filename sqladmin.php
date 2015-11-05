@@ -28,5 +28,9 @@ if (true) {
     unset ($x);
 }
 
-print ("You should add the phpliteadmin source to this file!");
+if (!file_exists ("inc/sqladmin.php")) {
+    print ("You should add place & secure phpliteadmin at <b>inc/sqladmin.php</b>!");
+} else {
+    include ("inc/sqladmin.php");
+}
 ?>
