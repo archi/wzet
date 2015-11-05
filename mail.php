@@ -55,7 +55,7 @@ while ($data = $q->fetchArray ()) {
     $mail .= $data[0] . ": " . $data[1] . "\n";
 }
 
-if ($k == $tk) {
+if ($preview) {
     print ("<pre>$mail</pre>");
     exit (0);
 }
