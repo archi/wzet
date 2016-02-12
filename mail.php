@@ -48,11 +48,13 @@ $mail = "Hallo Kochgruppe,\n"
     . "Platz 3: " . row () . "\n"
     . "\n"
     . "Einigt euch bitte, wer einkaufen faehrt und wer bezahlt.\n"
-    . "\n\n"
+    . "\n"
+    . "Das Tool liegt unter " . $_CONFIG["URL"]
+    . "\n\n------------------------------------\n"
     . "Derzeitiger Stand:\n";
 
 while ($data = $q->fetchArray ()) {
-    $mail .= $data[0] . ": " . $data[1] . "\n";
+    $mail .= $data[0] . ": " . ($data[1]/100) . "\n";
 }
 
 if ($preview) {
@@ -60,5 +62,10 @@ if ($preview) {
     exit (0);
 }
 
-print ("Not implemented, yet!");
+$mail = wordwrap ($mail, 70);
+
+mail ($_CONFIG['MAIL_RECEIVER'], "Kochliste", $mail, "From: ". $_CONFIG["MAIL_FROM"]);
+
+print "Gesendet:\n--------------------\n";
+print $mail;
 ?>
