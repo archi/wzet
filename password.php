@@ -39,7 +39,7 @@ if ($mode == "mail") {
         mail ($addr, "Passwort vergessen", wordwrap ("Hallo, fuer deinen Account bei ".$_CONFIG["URL"]." wurde von der IP ".$_SERVER["REMOTE_ADDR"]." ein neues Passwort angefordert.\n\n<a href=\"$link\">Klicke hier, um ein neues Passwort zu setzen</a>\n\nSollte der Link nicht funktionieren, kopiere ihn in deinen Browser:\n\n$link\n\nSolltest du kein neues Passwort angefordert haben, wende dich bitte an einen Administrator!\n", 70), "From: ". $_CONFIG["MAIL_FROM"]);
     }
 
-    print ("Sollte die angegebene Adresse in der Datenbank hinterlegt sein, so solltest du gleich eine E-Mail mit einem Link f&uuml;r ein neues Passwort bekommen");
+    print ("Sollte die angegebene Adresse in der Datenbank hinterlegt sein, so solltest du gleich eine E-Mail mit einem Link f&uuml;r ein neues Passwort bekommen.<br><br>Bis dein Anbieter die Mail empfangen hat, k&ouml;nnten bis zu 15 Minuten vergehen. Vergess auch nicht, mal einen Blick in deinen Spam-Ordner zu werfen, da die Mail dort einsortiert werden k&ouml;nnte.<br><br>Sollte auch nach l&auml;ngerer Zeit keine E-Mail gekommen sein, kontaktiere bitte einen Administrator.");
 
     exit ();
 }
