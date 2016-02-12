@@ -20,11 +20,14 @@ if (userFlag(1)) {
         . "<a href='reset.php'>RESET DB</a><br>"
     );
 
-    if ($_CONFIG["MAIL_PREVIEW_KEY"] != "")
-        print ("<a href='mail.php?m=".($_CONFIG["MAIL_PREVIEW_KEY"])."'>Mail Vorschau</a><br>");
+    if ($_CONFIG["MAIL_PREVIEW_KEY"] != "") {
+        print ("<a href='mail.php?m=".($_CONFIG["MAIL_PREVIEW_KEY"])."'>Mail Vorschau</a>");
 
-    if ($_CONFIG["MAIL_CRON_KEY"] != "")
-        print ("<a href='mail.php?m=".($_CONFIG["MAIL_CRON_KEY"])."'>Senden</a>)<br>");
+        if ($_CONFIG["MAIL_CRON_KEY"] != "")
+            print ("(<a href='mail.php?m=".($_CONFIG["MAIL_CRON_KEY"])."'>Senden</a>)");
+
+        print ("<br>");
+    }
 }
 
 include ("inc/foot.php");

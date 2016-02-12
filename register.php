@@ -67,13 +67,8 @@ if (isset ($_POST['user'])) {
     $q->reset ();
 
     if ($ok) {
-        $random = openssl_random_pseudo_bytes (8);
-        $random = base64_encode ($random);
-        $hash = $pw0 . $random;
-        for ($i = 0; $i < 16; $i++) {
-            $hash = hash("sha512", $hash);
-        }
-        $hash = $random . ":" . $hash;
+        require_once ("inc/functions.php");
+        $hash = hashPassword ($pw0); 
 
         $q = $db->prepare ("INSERT INTO Users (Login, Password, Mail, Name, Konto) VALUES (:1, :2, :3, :4, :5);");
         $q->bindParam (":1", $user);
