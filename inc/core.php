@@ -21,7 +21,9 @@ if ($_CONFIG["SHOW_ERRORS"]) {
     error_reporting (-1);
 }
 
-$_DB = new SQLite3 ($_CONFIG["DATABASE"]);
+if (!isset ($_DB)) {
+    $_DB = new SQLite3 ($_CONFIG["DATABASE"]);
+}
 
 if ($_DB->lastErrorCode () != 0) {
     die ("Fatal DB Error!");
@@ -107,7 +109,7 @@ Bitte Einloggen:<br>
 <input type='submit'>
 </form>
 EOHTML;
-print ("Login Meldung: <b>$msg</b>");
+print ("Login Meldung: <b>$msg</b><br><br><a href='password.php?mode=forgot'>Solltest du dein Passwort vergessen haben, so kannst du es hier zur&uuml;ck setzen</a>.");
 exit ();
 }
 

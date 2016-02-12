@@ -10,6 +10,7 @@ print <<<EOP
 <a href='event.php' >Neues Kochevent</a><br>
 <a href='users.php' >Nutzerliste</a><br>
 <a href='log.php'   >Protokoll</a><br>
+<a href='password.php?mode=change'>Passwort &auml;ndern</a><br>
 <a href='logout.php'>Ausloggen</a><br>
 EOP;
 
@@ -24,7 +25,7 @@ if (userFlag(1)) {
         print ("<a href='mail.php?m=".($_CONFIG["MAIL_PREVIEW_KEY"])."'>Mail Vorschau</a>");
 
         if ($_CONFIG["MAIL_CRON_KEY"] != "")
-            print ("(<a href='mail.php?m=".($_CONFIG["MAIL_CRON_KEY"])."'>Senden</a>)");
+            print (" (<a href='mail.php?m=".($_CONFIG["MAIL_CRON_KEY"])."'>Senden</a>)");
 
         print ("<br>");
     }

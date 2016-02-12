@@ -3,8 +3,9 @@
 require_once ("inc/config.php");
 require_once ("inc/functions.php");
 
-if (!isset ("mode")) {
-    die "Error: No password change mode set!";
+if (!isset ($_GET["mode"])) {
+    print "Error: No password change mode set!";
+    die ();
 }
 
 $mode = $_GET['mode'];
@@ -20,20 +21,22 @@ EOP;
     exit ();
 }
 
-$db = new SQLite3 ($_CONFIG["DATABASE"]);
+if (!isset ($_DB)) {
+    $_DB = new SQLite3 ($_CONFIG["DATABASE"]);
+}
 
 if ($mode == "mail") {
     $addr = postOrDie ("mail");
     $random = openssl_random_pseudo_bytes (32);
     $random = base64_encode ($random);
-    $q = $db->prepare ("UPDATE Users SET Token = :1 WHERE Mail = :2");
+    $q = $_DB->prepare ("UPDATE Users SET Token = :1 WHERE Mail = :2");
     $q->bindParam (":1", $random);
     $q->bindParam (":2", $addr);
     $q->execute ();
 
-    if ($db->changes () > 0) {
-        $link = $_CONFIG["URL"] . "password.php?mode=token&token=$random";
-        mail ($addr, "Passwort vergessen", wordwrap ("Hallo, fuer deinen Account bei ".$_CONFIG["URL"]." wurde von der IP ".$_SERVER["REMOTE_ADDR"]." ein neues Passwort angefordert.\n\n<a href="$link">Klicke hier, um ein neues Passwort zu setzen</a>\n\nSollte der Link nicht funktionieren, kopiere ihn in deinen Browser:\n\n$link\n\nSolltest du kein neues Passwort angefordert haben, wende dich bitte an einen Administrator!\n", 70), "From: ". $_CONFIG["MAIL_FROM"]);
+    if ($_DB->changes () > 0) {
+        $link = $_CONFIG["URL"] . "password.php?mode=token&token=".urlencode ($random);
+        mail ($addr, "Passwort vergessen", wordwrap ("Hallo, fuer deinen Account bei ".$_CONFIG["URL"]." wurde von der IP ".$_SERVER["REMOTE_ADDR"]." ein neues Passwort angefordert.\n\n<a href=\"$link\">Klicke hier, um ein neues Passwort zu setzen</a>\n\nSollte der Link nicht funktionieren, kopiere ihn in deinen Browser:\n\n$link\n\nSolltest du kein neues Passwort angefordert haben, wende dich bitte an einen Administrator!\n", 70), "From: ". $_CONFIG["MAIL_FROM"]);
     }
 
     print ("Sollte die angegebene Adresse in der Datenbank hinterlegt sein, so solltest du gleich eine E-Mail mit einem Link f&uuml;r ein neues Passwort bekommen");
@@ -46,17 +49,18 @@ $token="auth";
 if ($mode == "token") {
     $token = getOrDie ("token");
     if (strlen ($token ) < 10) {
-        die ("Token is too short!");
+        print ("Token is too short!");
+        die ();
     }
-    $q = $db->prepare ("SELECT * FROM Users WHERE Token = :1");
+    $q = $_DB->prepare ("SELECT * FROM Users WHERE Token = :1");
     $q->bindParam (":1", $token);
     $r = $q->execute ();
     $_USER = $r->fetchArray ();
 
     if (!$_USER) {
-        die ("Bad Token!");
+        print ("Das Token ist ung&uuml;ltig! Versuch doch bitte, den Link von Hand in deinen Browser zu kopieren, da manche E-Mail Clients den Link beim Anklicken abschneiden.");
+        die ();
     }
-    $apply .= "&token=$token";
 } else if ($mode == "change") {
     include ("inc/core.php");
 } else {
@@ -71,9 +75,7 @@ if (isset ($_POST['pw1']) && isset ($_POST['pw0'])) {
     if ($pw0 != $pw1) {
         print "Die Passw&ouml;rter stimmen nicht &uuml;berein!<br>";
         $ok = 0;
-    }
-
-    if (strlen ($pw) < 6) {
+    } else if (strlen ($pw0) < 6) {
         print "Das Passwort ist zu kurz (mindestens 6 Zeichen)!<br>";
         $ok = 0;
     } 
@@ -82,23 +84,25 @@ if (isset ($_POST['pw1']) && isset ($_POST['pw0'])) {
         print ("<br>Bitte versuche es noch einmal:<br><br>");
     } else {
         $hash = hashPassword ($pw0);
-        $q = $db->prepare ("UPDATE Users SET Password = :1, Token = NULL WHERE ID = :2");
+        $q = $_DB->prepare ("UPDATE Users SET Password = :1, Token = NULL WHERE ID = :2");
         $q->bindParam (":1", $hash);
-        $q->bindParam (":2", $_USERS['ID');
+        $q->bindParam (":2", $_USER['ID']);
         $q->execute ();
-        print ("Das Passwort f&uuml;r ".$_USER['Login']." wurde aktualisiert. <a href='index.php'>Du kannst dich jetzt einloggen</a>.");
+
+        print ("Das Passwort f&uuml;r ".$_USER['Login']." wurde aktualisiert. <a href='index.php'>Zur &Uuml;bersichtsseite</a>.");
         exit ();
     }
 }
 
 $u = $_USER["Login"];
+$token = urlencode ($token);
 
 print <<<EOP
 Zur Erinnerung, dein Loginname ist '$u'.<br>
 <form method="post" action="password.php?mode=$mode&token=$token">
 Bitte gib dein neues Passwort (mindestens 6 Zeichen) zweimal ein:<br>
-<input type="text" name="pw0"><br>
-<input type="text" name="pw1"><br>
+<input type="password" name="pw0"><br>
+<input type="password" name="pw1"><br>
 <input type="submit" value="Absenden">
 </form>
 EOP;
