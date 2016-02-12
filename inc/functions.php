@@ -31,4 +31,15 @@ function userFlag ($x) {
     $f &= $x;
     return $f == $x;
 }
+
+function hashPassword ($pw) {
+    $random = openssl_random_pseudo_bytes (8);
+    $random = base64_encode ($random);
+    $hash = $pw . $random;
+    for ($i = 0; $i < 16; $i++) {
+        $hash = hash("sha512", $hash);
+    }
+    $hash = $random . ":" . $hash;
+    return $hash;
+}
 ?>

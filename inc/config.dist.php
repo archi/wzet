@@ -52,4 +52,17 @@ $_CONFIG['REGISTER_KEY'] = "0";
  * Try to enable PHP error messages?
  */
 $_CONFIG["SHOW_ERRORS"] = true;
+
+/**
+ * What's the base URL of this installation?
+ * (Include trailing slash!)
+ *
+ * Used in E-Mails, etc.
+ */
+$_CONFIG["URL"] = "http://example.com/wzet/";
+
+/**
+ * What to use as the sender e-mail adress?
+ */
+$_CONFIG["MAIL_FROM"] = "wzet@example.com";
 ?>
