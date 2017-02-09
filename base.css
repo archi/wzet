@@ -41,6 +41,7 @@ body {
 
 .content {
     max-width: 800px;
-    margin: auto;
+    margin: 32px auto;
+    padding: 0 16px;
     background-color: #fff;
 }
