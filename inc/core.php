@@ -134,6 +134,7 @@ global $_CONFIG;
     <link rel='stylesheet' href='base.css'>
   </head>
   <body>
+  	<div class="content">
 
 <?php
  if (!isset($in_index))
