@@ -64,7 +64,10 @@ if ($preview) {
 
 $mail = wordwrap ($mail, 70);
 
-mail ($_CONFIG['MAIL_RECEIVER'], "Kochliste", $mail, "From: ". $_CONFIG["MAIL_FROM"]);
+$date = new DateTime();
+$subject = "Kochliste KW " . $date->format("W") . " " . $date->format("Y");
+
+mail ($_CONFIG['MAIL_RECEIVER'], $subject, $mail, "From: ". $_CONFIG["MAIL_FROM"]);
 
 print "Gesendet:\n--------------------\n";
 print $mail;
