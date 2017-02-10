@@ -1,2 +1,5 @@
 inc/config.php
 .*.swp
+.settings
+.buildpath
+.project
