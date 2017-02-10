@@ -1,6 +1,21 @@
-.icon12 { width:12px; height:12px; }
-.icon14 { width:14px; height:14px; }
-.icon14_16 { position:relative; top:2px; left:2px; width:14px; height:14px; padding-right:2px; }
+.icon12 {
+    width: 12px;
+    height: 12px;
+}
+
+.icon14 {
+    width: 14px;
+    height: 14px;
+}
+
+.icon14_16 {
+    position: relative;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    padding-right:2px;
+}
 
 .pay_radio {
     position:relative;
@@ -18,4 +33,15 @@
 
 .fr {
     float:right;
+}
+
+body {
+    background-color: #ccc;
+}
+
+.content {
+    max-width: 800px;
+    margin: 32px auto;
+    padding: 0 16px;
+    background-color: #fff;
 }
