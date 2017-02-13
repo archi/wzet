@@ -87,7 +87,7 @@ if (isset ($_POST['user'])) {
 }
 if (!$ok) {
     print <<<EOP
-<form method='post' action='register.php?k=$key'>
+<form method='post' action='register.php?k=$k'>
 <table>
 <tr><td>Login:</td><td><input type='text' name='user' value='$user'></td><td>(Min. 2 Zeichen)</td></tr>
 <tr><td>Passwort:</td><td><input type='password' name='pw0'></td><td>(Min. 6 Zeichen)</td></tr>
