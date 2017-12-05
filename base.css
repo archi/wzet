@@ -25,6 +25,7 @@
 }
 
 .block {
+    width: 100%;
     display:inline-block;
     line-height: 1.5;
 }
