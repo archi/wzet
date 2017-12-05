@@ -21,10 +21,12 @@
     position:relative;
     left:2px;
     float:right;
+    margin-top: 8px;
 }
 
 .block {
     display:inline-block;
+    line-height: 1.5;
 }
 
 .fl {
@@ -42,6 +44,17 @@ body {
 .content {
     max-width: 800px;
     margin: 32px auto;
-    padding: 0 16px;
+    padding: 16px;
     background-color: #fff;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: Arial;
+}
+
+a {
+  line-height: 1.5;
+}
+
+label {
+  padding-right: 10px;
 }
