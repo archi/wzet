@@ -23,13 +23,37 @@ if ($total_f == 0) {
 }
 $user_c = sizeof ($users);
 
+
 /**
- * Get the +X for ATTENDING users!
+ * Check specified user IDs vs DB
+ */
+$q = $_DB->prepare ("SELECT ID, Name FROM users WHERE ID = :1;");
+
+$q->bindParam (":1", $payer);
+$r = $q->execute ();
+if (!($f = $r->fetchArray ())) {
+    die ("Fatal: Bad payer ID!");
+}
+$payer_name = $f[1];
+q->reset();
+
+/**
+ * Get the +X for ATTENDING users and get usernames with appropriate pluses
  */
 $plus = postOrDie ("plus");
 $pp = 0;
+$user_names = array();
 foreach ($users as $u) {
     $pp += $plus[$u];
+    q->bindParam(":1", $u)
+    if (!($f = $r->fetchArray ())) {
+      die ("Fatal: Bad user ID!");
+    }
+    $user_names[$f[0]] = $f[1];
+    if ($plus[$u]) {
+      $user_names[$f[0]] .= " +" . $plus[$u];
+    }
+    q->reset();
 }
 $user_c += $pp;
 
@@ -43,39 +67,31 @@ if (array_sum ($plus) != $pp) {
  */
 $per_user =  ceil(($total_f/(float)$user_c) * 100);
 
-/**
- * Check specified user IDs vs DB
- */
-$q = $_DB->prepare ("SELECT ID, Name FROM users WHERE ID = :1;");
+$total_eff = $per_user * $user_c; ?>
 
-$q->bindParam (":1", $payer);
-$r = $q->execute ();
-if (!($f = $r->fetchArray ())) {
-    die ("Fatal: Bad payer ID!");
-}
-$total_eff = $per_user * $user_c;
-print ("Rechung: $total &euro; gerundet auf ". ($total_eff / 100) . "&euro;<br>\n");
-print ("Bezahlt: " . $f[1] . "<br>\n");
-print ("Kosten pro Person: ".($per_user/100)."&euro;<br>\n");
 
-$q->reset ();
-print ("Es essen mit:<ul>\n");
-foreach ($users as $u) {
-    $q->bindParam (":1", $u);
-    $r = $q->execute ();
-    if (!($f = $r->fetchArray ())) {
-        die ("Fatal: Bad user ID!");
-    }
-    print ("<li>".$f[1]);
-    if ($plus[$u] != 0) {
-        print (" +".$plus[$u]);
-    }
-    print ("</li>\n");
-    $q->reset ();
-}
-print ("</ul>");
-print ("Teilnehmer Gesamt: $user_c<br>\n");
-$_DB->query ("BEGIN TRANSACTION;");
+
+
+Rechnung: <?php print $total ?> &euro; gerundet auf <?php print ($total_eff / 100) ?> &euro;<br>
+Bezahlt: <?php print $payer_name ?><br>
+Kosten pro Person: <?php print ($per_user/100) ?>&euro;<br>;
+
+$q->reset (); ?>
+
+Es essen mit:
+<ul>
+
+<?php foreach ($users as $u) { ?>
+    <li>
+      <?php print $username[$u]; ?>
+    </li>
+<?php } ?>
+</ul>
+Teilnehmer Gesamt: <?php print $user_c; ?>
+<br>
+
+
+<?php $_DB->query ("BEGIN TRANSACTION;");
 
 $attendees = array();
 $q = $_DB->prepare ("UPDATE Users SET Konto = Konto - :1 WHERE ID = :2;");
@@ -118,7 +134,7 @@ $q->reset ();
 addToLog ("Added Event", $event_id);
 
 $_DB->query ("COMMIT TRANSACTION");
-
-print ("<b>Event eingetragen!</b>");
-include ("inc/foot.php");
+?>
+<b>Event eingetragen!</b>
+<?php include ("inc/foot.php");
 ?>
