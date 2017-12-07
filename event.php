@@ -58,7 +58,7 @@ while ($user = $res->fetchArray ()) {
     }?>
     <div class='block'>
       <label>
-        <input type='checkbox' name='user[<?php print $user[0]]?>' class='user'>
+        <input type='checkbox' name='user[<?php print $user[0]?>]' class='user'>
           <?php print $ba . $user[1]. " (".($user[2]/100)."&euro;)" . $bb; ?>
       </label>
       <div class='fr'>
@@ -67,6 +67,7 @@ while ($user = $res->fetchArray ()) {
       </div>
     </div>
     <br>
+<?php
 }
 ?>
 </div>
