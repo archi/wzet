@@ -81,7 +81,7 @@ Es essen mit:
 
 <?php foreach ($users as $u) { ?>
     <li>
-      <?php print $username[$u]; ?>
+      <?php print $user_names[$u]; ?>
     </li>
 <?php } ?>
 </ul>
