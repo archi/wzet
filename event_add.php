@@ -46,6 +46,7 @@ $user_names = array();
 foreach ($users as $u) {
     $pp += $plus[$u];
     $q->bindParam(":1", $u);
+    $q->execute();
     if (!($f = $r->fetchArray ())) {
       die ("Fatal: Bad user ID!");
     }
@@ -74,7 +75,7 @@ $total_eff = $per_user * $user_c; ?>
 
 Rechnung: <?php print $total ?> &euro; gerundet auf <?php print ($total_eff / 100) ?> &euro;<br>
 Bezahlt: <?php print $payer_name ?><br>
-Kosten pro Person: <?php print ($per_user/100) ?>&euro;<br>;
+Kosten pro Person: <?php print ($per_user/100) ?>&euro;<br>
 
 Es essen mit:
 <ul>
