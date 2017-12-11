@@ -35,7 +35,7 @@ if (!($f = $r->fetchArray ())) {
     die ("Fatal: Bad payer ID!");
 }
 $payer_name = $f[1];
-q->reset();
+$q->reset();
 
 /**
  * Get the +X for ATTENDING users and get usernames with appropriate pluses
@@ -45,7 +45,7 @@ $pp = 0;
 $user_names = array();
 foreach ($users as $u) {
     $pp += $plus[$u];
-    q->bindParam(":1", $u)
+    $q->bindParam(":1", $u);
     if (!($f = $r->fetchArray ())) {
       die ("Fatal: Bad user ID!");
     }
@@ -53,7 +53,7 @@ foreach ($users as $u) {
     if ($plus[$u]) {
       $user_names[$f[0]] .= " +" . $plus[$u];
     }
-    q->reset();
+    $q->reset();
 }
 $user_c += $pp;
 
