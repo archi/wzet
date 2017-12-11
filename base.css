@@ -59,3 +59,8 @@ a {
 label {
   padding-right: 10px;
 }
+
+/* odd-rows coloring for "new event" */
+#f0 .block:nth-child(4n+1) /* 4n since each row is 2 elements */ {
+    background-color: #eee;
+}
