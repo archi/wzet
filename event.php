@@ -32,9 +32,11 @@ $expected_event_id = $r[0] + 1;
 <br>
 
 <div class='block'>
-  <div class='fl'><img src='img/arrow-down.svg' class='icon14_16'>Teilnehmer</div>
-  <div class='fr'>Bezahler<img src='img/arrow-down.svg' class='icon14_16'></div>
-<br>
+    <div class='head'>
+        <div class='fl'><img src='img/arrow-down.svg' class='icon14_16'>Teilnehmer</div>
+        <div class='fr'>Bezahler<img src='img/arrow-down.svg' class='icon14_16'></div>
+    </div>
+    <br>
 
 <?php
 // Get top 3 whoms turn it is
