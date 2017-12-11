@@ -1,3 +1,5 @@
+![Travis Built Status Image](https://travis-ci.org/archi/wzet.svg?branch=master)
+
 This is our "Who pays the bill" [german: Wer Zahlt EigenTlich => WZET] tool.
 
 Visuals and code are both very crude, since I just hacked it with little effort put into it.
