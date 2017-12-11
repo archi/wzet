@@ -76,8 +76,6 @@ Rechnung: <?php print $total ?> &euro; gerundet auf <?php print ($total_eff / 10
 Bezahlt: <?php print $payer_name ?><br>
 Kosten pro Person: <?php print ($per_user/100) ?>&euro;<br>;
 
-$q->reset (); ?>
-
 Es essen mit:
 <ul>
 
