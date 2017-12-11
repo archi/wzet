@@ -1,4 +1,4 @@
-![Travis Built Status Image](https://travis-ci.org/archi/wzet.svg?branch=master)
+Travis linting status: ![Travis Built Status Image](https://travis-ci.org/archi/wzet.svg?branch=master)
 
 This is our "Who pays the bill" [german: Wer Zahlt EigenTlich => WZET] tool.
 
