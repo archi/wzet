@@ -1,7 +1,7 @@
 <?php
 include ("inc/core.php");
 
-$q = $_DB->query ("SELECT ID,Name,Login,Konto FROM Users;");
+$q = $_DB->query ("SELECT ID,Name,Login,Konto FROM Users ORDER BY Konto ASC;");
 
 print <<<EOP
 <table>
