@@ -103,7 +103,7 @@ function check () {
 
     if (at <= 2) {
         alert ("Es sollten wenigstens zwei Personen Mitessen!");
-//TODO enable this line!        return false;
+        return false;
     }
 
     var pcb = document.getElementsByName ('user['+p+']')[0];
