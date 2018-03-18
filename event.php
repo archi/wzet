@@ -60,12 +60,12 @@ while ($user = $res->fetchArray ()) {
     }?>
     <div class='block'>
       <label>
-        <input type='checkbox' name='user[<?php print $user[0]?>]' class='user'>
+        <input type='checkbox' name='user[<?php print $user[0]?>]' class='user' onchange='countAttendees()'>
           <?php print $ba . $user[1]. " (".($user[2]/100)."&euro;)" . $bb; ?>
       </label>
       <div class='fr'>
-        &nbsp;+<input type='text' name='plus[<?php print $user[0] ?>]' size='1' value='0'>
-        <input type='radio' value='<?php print $user[0] ?>' class='pay_radio' name='payer' <?php print $checked ?>>
+        &nbsp;+<input type='text' name='plus[<?php print $user[0] ?>]' size='1' value='0' class='plus' onchange='countAttendees()'>
+        <input type='radio' value='<?php print $user[0] ?>' class='pay_radio' name='payer' <?php print $checked ?> onchange='countAttendees()'>
       </div>
     </div>
     <br>
@@ -80,6 +80,24 @@ while ($user = $res->fetchArray ()) {
 </div>
 
 <script>
+function countAttendees {
+    var at = 0;
+    var users = document.getElementsByClassName ('user');
+    for (var i=0; i < users.length && at <= 2; i++) {
+        if (users[i].checked)
+            at++;
+    }
+
+    var plus = 0;
+    var pluses = document.getElementsByClassName ('plus');
+    for (var i=0; i < pluses.length && at <= 2; i++) {
+        plus += pluses[i].value;
+    }
+
+    var b = document.getElementById('submitButton');
+    b.value="Submit ("+at+" +"+plus+")";
+}
+
 function check () {
     var p=-1;
     var radios = document.getElementsByClassName('pay_radio');
@@ -103,7 +121,7 @@ function check () {
 
     if (at <= 2) {
         alert ("Es sollten wenigstens zwei Personen Mitessen!");
-//TODO enable this line!        return false;
+        return false;
     }
 
     var pcb = document.getElementsByName ('user['+p+']')[0];
@@ -118,10 +136,10 @@ function check () {
     return true;
 }
 
-    var s = document.getElementById('nojs');
-    s.parentElement.removeChild (s);
+var s = document.getElementById('nojs');
+s.parentElement.removeChild (s);
 
-    document.getElementById ('js').innerHTML="<input type='submit' onclick='check()'>";
+document.getElementById ('js').innerHTML="<input id='submitButton' type='submit' onclick='check()'>";
 </script>
 
 <?php include ("inc/foot.php"); ?>
