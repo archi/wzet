@@ -80,22 +80,22 @@ while ($user = $res->fetchArray ()) {
 </div>
 
 <script>
-function countAttendees {
+function countAttendees () {
     var at = 0;
     var users = document.getElementsByClassName ('user');
-    for (var i=0; i < users.length && at <= 2; i++) {
+    for (var i=0; i < users.length; i++) {
         if (users[i].checked)
             at++;
     }
 
     var plus = 0;
     var pluses = document.getElementsByClassName ('plus');
-    for (var i=0; i < pluses.length && at <= 2; i++) {
-        plus += pluses[i].value;
+    for (var i=0; i < pluses.length; i++) {
+        plus += parseInt(pluses[i].value);
     }
 
     var b = document.getElementById('submitButton');
-    b.value="Submit ("+at+" +"+plus+")";
+    b.value="Submit ("+at+"+"+plus+")";
 }
 
 function check () {
