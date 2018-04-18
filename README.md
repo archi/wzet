@@ -2,7 +2,7 @@ Travis linting status: ![Travis Built Status Image](https://travis-ci.org/archi/
 
 This is our "Who pays the bill" [German: Wer Zahlt EigenTlich => WZET] tool.
 
-Visuals and code are both very crude, since I just hacked it with little effort put into it.
+Visuals and code are both very crude, since I put my emphasis on simplicity of development. The benefit is, unlike more modern SPA approaches, adding a feature requires comprehension of a more limited amount of code (or the same amount of code in only a single file).
 
 To get a running instance:
 
