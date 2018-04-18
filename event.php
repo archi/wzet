@@ -119,7 +119,7 @@ function check () {
             at++;
     } 
 
-    if (at <= 2) {
+    if (at < 2) {
         alert ("Es sollten wenigstens zwei Personen Mitessen!");
         return false;
     }
