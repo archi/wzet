@@ -24,5 +24,6 @@ General todo (not in any order):
 10. Display more details in the log
 11. Implement communication with cron job (e.g. file with timestamp of last event creation) so overview mails can be sent e.g. with any db-change happening between Monday and Wednesday
 
-DB layout is not quite 100% ERM, but I believe the way I did it now is a bit more versatile.
-I.e. the Users.Konto value could be computed on the fly, but that way it can be bootstrapped with values != 0.
+DB layout is not quite 100% ERM, ~~but I believe the way I did it now is a bit more versatile.~~
+1. I.e. the Users.Konto value could be computed on the fly, but that way it can be bootstrapped with values != 0. This is still good.
+2. The list of attendees and their +X in a textual list was a bad idea and needs to be ditched (luckily, that's easy)
